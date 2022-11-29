@@ -1,6 +1,6 @@
 
 
-export const Content = ({className}) => {
+export const Favorites = ({className}) => {
 
 
     return(
@@ -8,7 +8,7 @@ export const Content = ({className}) => {
                 {/* Search field - city name */}
                 {/* Current weather */}
                 {/* 5 days weather */}
-                <h1>Home</h1>
+                <h1>Favorites</h1>
         </div>
         
     )
