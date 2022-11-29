@@ -14,11 +14,10 @@ export const Main = () => {
       <div className={style['app-container']}>
         
         <Router>
-        <Bar />
+            <Bar />
             <Routes>
-              
-                <Route path='/' element={ <Content className={[style['content']]}/>}/> 
-                <Route path='/favorites' element={ <Favorites className={[style['content']]}/>}/>     
+                <Route path='/' element={ <Content />}/> 
+                <Route path='/favorites' element={ <Favorites />}/>     
             </Routes>
         </Router>
       </div>

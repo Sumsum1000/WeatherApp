@@ -1,0 +1,35 @@
+.content{
+    background-color: rgb(182, 174, 164);
+    height: 93%;
+    padding: 0 100px 0 100px;
+
+
+    .grid-current{
+        background-color: rgba(95, 158, 160, 0.2);
+        display: grid;
+        grid-template-areas: 'i name blank iconcurrent btn'
+                             'i degreese blank c    t';
+        grid-template-rows: 100px 100px;
+        grid-template-columns: 200px 10% 1fr 10% 15%;
+
+        .test{
+            grid-area: i;
+        }
+        .namecurrent{
+            grid-area: name;
+        }
+        .deg-current{
+            grid-area: degreese;
+        }
+        .icon-current{
+            grid-area: iconcurrent;
+            width: 40%;
+            height: 40%;
+        }
+        .btn-favorites{
+            grid-area: btn;
+        }
+    }
+                    
+}
+
