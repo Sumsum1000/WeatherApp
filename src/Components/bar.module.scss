@@ -1,0 +1,13 @@
+.bar{
+    background-color: salmon;
+    border-bottom: 1px solid black;
+    height: 7%;
+    padding: 0 30px 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .button{
+        margin-left: 10px;
+    }
+}
