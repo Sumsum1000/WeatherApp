@@ -1,0 +1,67 @@
+.favorites{
+    background-color: rgb(206, 225, 237);
+    height: 75%;
+    padding: 0 100px 30px 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    //justify-content: space-between;
+    
+
+    .favorite-city{
+        display: flex;
+        align-items: flex-end;
+        //background-color: rgb(213, 197, 227);
+        width: 100%;
+        height: 220px;
+
+        .name{
+            font-size: 28px;
+            font-weight: 600;
+            //position: relative;
+            top: 4px;
+            margin-right: auto;
+        }
+
+        img{
+            width: 220px;
+            height: 220px;
+            position: relative;
+            top: 20px;
+        }
+
+        .next-day{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            //background-color: antiquewhite;
+
+            .temp-date{
+                display: flex;
+                flex-direction: column;
+                font-size: 14px;
+                font-weight: 600;
+                position: relative;
+                //bottom: 30px;
+
+                p:first-child{
+                    color: rgb(87, 87, 87);
+                }
+
+                p:last-child{
+                    color: rgb(0, 0, 0);
+                    font-size: 16px;
+                    font-weight: 700;
+                }
+            }
+    
+            img{
+                width: 220px;
+                height: 220px;
+            }
+        }
+
+       
+    }
+}

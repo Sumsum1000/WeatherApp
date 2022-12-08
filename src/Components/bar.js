@@ -7,8 +7,8 @@ export const Bar = () => {
     const nevigate = useNavigate();
 
     return(
-        <header className={[style['bar']]}>
-            <p>What's the weather ?</p>
+        <nav className={[style['bar']]}>
+            <p className={style['title']}>What's the weather ?</p>
             <div >
                 <button 
                     className={style['button']}
@@ -19,6 +19,6 @@ export const Bar = () => {
                     onClick={() => nevigate('/favorites')}
                 >Favorites</button>
             </div>
-        </header>
+        </nav>
     )
 }

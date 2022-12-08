@@ -1,0 +1,24 @@
+[
+    {
+    "name": "Berlin",
+    "lat": 52.5170365,
+    "lon": 13.3888599,
+    "country": "DE"
+    },
+
+    {
+        "name": "Tel Aviv-Yafo",
+        "lat": 32.0852997,
+        "lon": 34.7818064,
+        "country": "IL",
+        "state": "Tel Aviv District"
+    },
+
+    {
+        "name": "Zocca",
+        "lat": 44.3472638,
+        "lon": 10.990407,
+        "country": "IT",
+        "state": "Emilia-Romagna"
+    }
+]
