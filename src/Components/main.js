@@ -2,7 +2,7 @@ import style from './style.module.scss';
 //---------------------------------------------
 import { Bar } from './bar';
 import { Content } from './content';
-import { Favorites } from './favorites';
+import { Favorites } from './Favorites/favorites';
 //---------------------------------------------
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
