@@ -3,7 +3,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const favoritesListSlice = createSlice({
     name: 'favoritesList',
-    initialState: {cities: ['Asaf']},
+    initialState: {cities: ['Tokyo, Paris']},
     reducers: {
         addToFavorite (state, action) {
             state.cities = [...state.cities, action.payload]

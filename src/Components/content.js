@@ -102,6 +102,14 @@ export const Content = () => {
         //fetchCityData(cityName);
         dispatch(favoritesListActions.addToFavorite(cityRef.current.value))
     }
+             
+    const fetchInputCity = (e) => {
+        if (e.keyCode === 13) {
+            const cityToFetch = cityRef.current.value;
+            fetchCityData(cityToFetch);
+            cityRef.current.value = '';
+        }
+    }
 
 
     useEffect(() => {
@@ -118,13 +126,19 @@ export const Content = () => {
         <div className={[style['content']]}>
             {/* Search field - city name */}
             <div className={style['favorites-container']}>
-                <input className={style['input-city']} ref={cityRef} placeholder='Enter a city'/>
+                <input 
+                    className={style['input-city']} 
+                    ref={cityRef} 
+                    placeholder='Enter a city'
+                    onKeyDown={(e) => fetchInputCity(e)}
+                />
                 {/* <img 
                     className={style['icon-favorites']} 
                     src={favorite}
                     onClick={cityHandler}
                 /> */}
                 <svg xmlns="http://www.w3.org/2000/svg" 
+                  onClick={cityHandler}
                   onMouseEnter={() =>setHeartColor('gray')}
                   onMouseLeave={() => setHeartColor('black')}
                   width="28" height="28" viewBox="0 0 24 24"><path fillOpacity={1} fill={heartColor} d="M12 9.229c.234-1.12 1.547-6.229 5.382-6.229 2.22 0 4.618 1.551 4.618 5.003 0 3.907-3.627 8.47-10 12.629-6.373-4.159-10-8.722-10-12.629 0-3.484 2.369-5.005 4.577-5.005 3.923 0 5.145 5.126 5.423 6.231zm-12-1.226c0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-7.962-9.648-9.028-12-3.737-2.338-5.262-12-4.27-12 3.737z"/></svg>
