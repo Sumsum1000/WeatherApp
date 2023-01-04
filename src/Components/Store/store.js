@@ -1,4 +1,5 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { act } from "react-dom/test-utils";
 
 const onStartSlice = createSlice({
     name: 'isFirstTime',
@@ -15,6 +16,7 @@ const currentCitySlice = createSlice({
     name: 'currentCity',
     initialState: {
         name: 'My', 
+        heartColor: 'red',
         days: [
             {dt_txt: '', weather: [{icon: ''}], temp: ''},
             {dt_txt: '', weather: [{icon: ''}], temp: ''},
@@ -26,13 +28,23 @@ const currentCitySlice = createSlice({
     reducers: {
         setCurrentCity (state, action) {
             return state = action.payload;
+        },
+        toggleHeartColor (state, action) {
+           let color; 
+           if (action.payload === true) {
+                color = 'green';
+           }
+           else {
+                color = 'red';
+           }
+             state.heartColor = color;
         }
     }
 })
 
 const favoritesListSlice = createSlice({
     name: 'favoritesList',
-    initialState: {cities: []},
+    initialState: {cities: [], heartColor: 'red'},
     reducers: {
         addToFavorite (state, action) {
              state.cities = [...state.cities, action.payload]
@@ -49,6 +61,7 @@ const favoritesDataSlice = createSlice({
         // {
         //     city: 'Asaf', 
         //     id: 0.43645755
+        //     heartColor: 'red'
         //     days: [
         //         {dt_txt: '', weather: [{icon: ''}], temp: ''},
         //         {dt_txt: '', weather: [{icon: ''}], temp: ''},
@@ -64,12 +77,6 @@ const favoritesDataSlice = createSlice({
         },
         removeFavoritesData (state, action) {
             const id = action.payload;
-            // const arr1 = state.slice(0, index);
-            // const arr2 = state.slice(index + 1, state.legth);
-            // const newState = arr1.concat(arr2);
-            //const newState = state.splice(index, 1)
-            //const newState = [{name: 'Hello'}]
-            //console.log('newState ', newState);
             const newState = state;
             const result = newState.filter((e) => e.id !== id)
             return state = [...result];

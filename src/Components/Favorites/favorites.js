@@ -7,7 +7,7 @@ import { FavoriteCity } from './favoriteCity';
 import { fetchCityStart } from '../fetchActions';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCity, fetchCityData, extractHours, finalCityData } from '../currentCity'
-import { favoritesDataActions } from '../Store/store'
+import { favoritesDataActions, favoritesListActions } from '../Store/store'
 
 export const Favorites = ({className}) => {
 
@@ -32,9 +32,10 @@ export const Favorites = ({className}) => {
         dispatch(favoritesDataActions.addToFavoritesData(finalData))
     }
 
-    const handleRemove = (id) => {
+    const handleRemove = (id, name) => {
         console.log('Removed');
         dispatch(favoritesDataActions.removeFavoritesData(id))
+        dispatch(favoritesListActions.removeFromFavorites(name))
     }
 
     useEffect(() => {
@@ -42,23 +43,13 @@ export const Favorites = ({className}) => {
 
     }, [])
 
-    useEffect(() => {
-        console.log('newList! ', list);
-    }, [list])
-
-    useEffect(() => {
-        console.log('favorites ', favorites);
-    }, [favorites])
-
-
-
 
     return(
         <div className={[style['favorites']]}>
             {favorites.length === 0 ? <p>no favorites added</p> : favorites.map(city => {
                return <FavoriteCity 
                 id={city.id}
-                onClick={() => handleRemove(city.id)}
+                onClick={() => handleRemove(city.id, city.name)}
                 name={city.name} 
                 temp1={city.days[0].temp}
                 temp2={city.days[1].temp}

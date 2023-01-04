@@ -12,8 +12,6 @@ import { favoritesListActions, favoritesDataActions } from '.././Components/Stor
 import { fetchCity, fetchCityData, extractHours, finalCityData } from './currentCity'
 
 
-
-
 export const Content = () => {
 
         localStorage.setItem('isFirstTime', 0);
@@ -30,6 +28,7 @@ export const Content = () => {
         const finalData = finalCityData(extractData, cityName);
         const id = Math.random();
         finalData.id = id;
+        finalData.heartColor = 'red';
         setListData([...listData, finalData])
         return finalData
         }
@@ -38,6 +37,7 @@ export const Content = () => {
     const firstTime = useSelector(state => state.isFirstTime);
     const favorites = useSelector(state => state.favoritesList.cities);
     const data = useSelector((state) => state.cityData);
+    //const heartColor = useSelector(state => state.heartColor)
     
     const fetchCityHandler = (e) => {
         if (e.keyCode === 13) {
@@ -60,6 +60,7 @@ export const Content = () => {
             fetchDays(currentCity.name)
             .then(data => dispatch(favoritesDataActions.addToFavoritesData(data))) 
         }
+            
     }
 
 
@@ -70,7 +71,21 @@ export const Content = () => {
             .then(data => dispatch(currentCityActions.setCurrentCity(data)))
             dispatch(onStartActiuons.setIsFirstTime());
        }
+
+       const isInFaforites = favorites.includes(currentCity.name);
+       dispatch(currentCityActions.toggleHeartColor(isInFaforites))
     }, [])
+
+    useEffect(() => {
+        const isInFaforites = favorites.includes(currentCity.name);
+        dispatch(currentCityActions.toggleHeartColor(isInFaforites))
+    }, [favorites])
+
+    useEffect(() => {
+        console.log('CurrentCity ', currentCity);
+        const isInFaforites = favorites.includes(currentCity.name);
+        dispatch(currentCityActions.toggleHeartColor(isInFaforites))
+    }, [currentCity])
 
     return(
         <div className={[style['content']]}>
@@ -83,7 +98,7 @@ export const Content = () => {
                 />
                 <svg xmlns="http://www.w3.org/2000/svg" 
                   onClick={() => favoriteHandler(currentCity.name)}
-                  width="28" height="28" viewBox="0 0 24 24"><path fillOpacity={1} fill={'red'} d="M12 9.229c.234-1.12 1.547-6.229 5.382-6.229 2.22 0 4.618 1.551 4.618 5.003 0 3.907-3.627 8.47-10 12.629-6.373-4.159-10-8.722-10-12.629 0-3.484 2.369-5.005 4.577-5.005 3.923 0 5.145 5.126 5.423 6.231zm-12-1.226c0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-7.962-9.648-9.028-12-3.737-2.338-5.262-12-4.27-12 3.737z"/></svg>
+                  width="28" height="28" viewBox="0 0 24 24"><path fillOpacity={1} fill={currentCity.heartColor} d="M12 9.229c.234-1.12 1.547-6.229 5.382-6.229 2.22 0 4.618 1.551 4.618 5.003 0 3.907-3.627 8.47-10 12.629-6.373-4.159-10-8.722-10-12.629 0-3.484 2.369-5.005 4.577-5.005 3.923 0 5.145 5.126 5.423 6.231zm-12-1.226c0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-7.962-9.648-9.028-12-3.737-2.338-5.262-12-4.27-12 3.737z"/></svg>
             </div>
             {/* <h1>{list}</h1> */}
              {/* Current weather */}
