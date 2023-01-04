@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { favoritesListActions, weatherDataActions } from '../Store/store';
 import { FavoriteDay } from './favoriteDay';
 
-export const FavoriteCity = () => {
+export const FavoriteCity = ({
+    id, name, src1, src2, src3, src4, temp1, temp2, temp3, temp4, onClick}) => {
 
     const dispatch = useDispatch();
     const list = useSelector((state) => state.favoritesList.cities)
@@ -25,7 +26,6 @@ export const FavoriteCity = () => {
         finalData = await cityDetailsJson.list.filter(element => element.dt_txt.split('').splice(11).join('') === "12:00:00")
 
         setDataToMap(finalData);
-        console.log('Final data: ', finalData);
     }
 
     useEffect(() => {
@@ -33,17 +33,13 @@ export const FavoriteCity = () => {
     }, [])
 
     return(
-        <div className={[style['favorite-city']]}>
-            <p className={[style['name']]}>Tel-Aviv</p>
-            {dataToMap.map((day, i) => {
-                return(
-                    <FavoriteDay 
-                    date={dataToMap[i].dt_txt.split('').splice(0, 10).join('')}
-                    src={`http://openweathermap.org/img/wn/${dataToMap[i].weather[0].icon}@4x.png`}
-                    temp={dataToMap[i].dt_txt.split('').splice(0, 10).join('')} 
-                    />
-                )
-            })}
+        <div className={[style['favorite-city']]} id={id}>
+            <h3>{name}</h3>
+            <FavoriteDay src={src1} temp={temp1} />
+            <FavoriteDay src={src2} temp={temp2} />
+            <FavoriteDay src={src3} temp={temp3} />
+            <FavoriteDay src={src4} temp={temp4} />
+            <button onClick={onClick}>x</button>
         </div> 
     )
 }

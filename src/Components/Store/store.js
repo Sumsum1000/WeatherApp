@@ -32,7 +32,7 @@ const currentCitySlice = createSlice({
 
 const favoritesListSlice = createSlice({
     name: 'favoritesList',
-    initialState: {cities: ['tokyo']},
+    initialState: {cities: []},
     reducers: {
         addToFavorite (state, action) {
              state.cities = [...state.cities, action.payload]
@@ -46,20 +46,33 @@ const favoritesListSlice = createSlice({
 const favoritesDataSlice = createSlice({
     name: 'cityData',
     initialState: [
-        {
-            city: 'Asaf', 
-            days: [
-                {dt_txt: '', weather: [{icon: ''}], temp: ''},
-                {dt_txt: '', weather: [{icon: ''}], temp: ''},
-                {dt_txt: '', weather: [{icon: ''}], temp: ''},
-                {dt_txt: '', weather: [{icon: ''}], temp: ''},
-                {dt_txt: '', weather: [{icon: ''}], temp: ''}
-                ]
-        }
+        // {
+        //     city: 'Asaf', 
+        //     id: 0.43645755
+        //     days: [
+        //         {dt_txt: '', weather: [{icon: ''}], temp: ''},
+        //         {dt_txt: '', weather: [{icon: ''}], temp: ''},
+        //         {dt_txt: '', weather: [{icon: ''}], temp: ''},
+        //         {dt_txt: '', weather: [{icon: ''}], temp: ''},
+        //         {dt_txt: '', weather: [{icon: ''}], temp: ''}
+        //         ]
+        // }
     ],
     reducers: {
         addToFavoritesData (state, action) {
-            state = [...state, action.payload]
+           return state = [...state, action.payload]
+        },
+        removeFavoritesData (state, action) {
+            const id = action.payload;
+            // const arr1 = state.slice(0, index);
+            // const arr2 = state.slice(index + 1, state.legth);
+            // const newState = arr1.concat(arr2);
+            //const newState = state.splice(index, 1)
+            //const newState = [{name: 'Hello'}]
+            //console.log('newState ', newState);
+            const newState = state;
+            const result = newState.filter((e) => e.id !== id)
+            return state = [...result];
         }
     }
 })

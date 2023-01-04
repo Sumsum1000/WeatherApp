@@ -6,66 +6,70 @@ import style from './favorites.module.scss';
 import { FavoriteCity } from './favoriteCity';
 import { fetchCityStart } from '../fetchActions';
 import { useSelector, useDispatch } from 'react-redux';
+import { fetchCity, fetchCityData, extractHours, finalCityData } from '../currentCity'
+import { favoritesDataActions } from '../Store/store'
 
 export const Favorites = ({className}) => {
 
     const dispatch = useDispatch();
     const list = useSelector((state) => state.favoritesList.cities)
+    const favorites = useSelector((state) => state.cityData)
+    const data = useSelector((state) => state.cityData);
     const [dataToMap, setDataToMap] = useState([
         {dt_txt: '', weather: [{icon: ''}], temp0: ''}
     ]);
     const [favoritesList, setFavoritesList] = useState([]);
-    let finalData;
+    const [tempCity, setTempCity] = useState();
 
-    const fetchDays = async(name) => {
-        const cityStart = await fetchCityStart(name);
-        console.log('city start ', cityStart[0].lon);
-        const newLat = await cityStart[0].lat;
-        const newLon = await cityStart[0].lon;
-        const cityUrl =`
-        https://api.openweathermap.org/data/2.5/forecast?lat=${newLat}&lon=${newLon}&appid=ab96154ce8f20e07812ea1417c9a0c0c` 
-        const cityDetails = await fetch(cityUrl);
-        const cityDetailsJson = await cityDetails.json();
-        return cityDetailsJson
+    const fetchDays = async(cityName) => {
+        const cityData = await fetchCity(cityName)
+        const allData = await fetchCityData(cityData) 
+        
+        const extractData = await extractHours(allData)
+        const finalData = await finalCityData(extractData, cityName);
+        setTempCity([finalData])
+        console.log('tempCity ', tempCity);
+        dispatch(favoritesDataActions.addToFavoritesData(finalData))
     }
 
-    const removeExtrasHours = async(data) => {
-        finalData = await data.list.filter(element => element.dt_txt.split('').splice(11).join('') === "12:00:00")
+    const handleRemove = (id) => {
+        console.log('Removed');
+        dispatch(favoritesDataActions.removeFavoritesData(id))
     }
-    
-
-    const fetchCity = async(name) => {
-        const days = fetchDays(name);
-        const extractedHours = removeExtrasHours(days);
-        setDataToMap(finalData);
-        setFavoritesList([...favoritesList, {name: name, days: finalData}]) 
-    }
-
-
 
     useEffect(() => {
-        list.map(city => {
-            fetchCity(city)
-        })
+        //fetchDays('London')
+
+    }, [])
+
+    useEffect(() => {
+        console.log('newList! ', list);
     }, [list])
+
+    useEffect(() => {
+        console.log('favorites ', favorites);
+    }, [favorites])
+
 
 
 
     return(
         <div className={[style['favorites']]}>
-            {/* <FavoriteCity 
-               date={dataToMap[0].dt_txt.split('').splice(0, 10).join('')}
-               src={`http://openweathermap.org/img/wn/${dataToMap[0].weather[0].icon}@4x.png`}
-               temp={dataToMap[0].dt_txt.split('').splice(0, 10).join('')} 
-            /> */}
-
-                <FavoriteCity /> 
-                {
-                    list.map(city => {
-                        <h1>city</h1>
-                    })
-                }
-    
-        </div>
+            {favorites.length === 0 ? <p>no favorites added</p> : favorites.map(city => {
+               return <FavoriteCity 
+                id={city.id}
+                onClick={() => handleRemove(city.id)}
+                name={city.name} 
+                temp1={city.days[0].temp}
+                temp2={city.days[1].temp}
+                temp3={city.days[2].temp}
+                temp4={city.days[3].temp}
+                src1={`http://openweathermap.org/img/wn/${city.days[0].icon}@4x.png`} 
+                src2={`http://openweathermap.org/img/wn/${city.days[1].icon}@4x.png`} 
+                src3={`http://openweathermap.org/img/wn/${city.days[2].icon}@4x.png`}  
+                src4={`http://openweathermap.org/img/wn/${city.days[3].icon}@4x.png`}  
+               />
+            })}
+        </div>  
     )
 }

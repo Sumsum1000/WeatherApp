@@ -8,7 +8,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { currentCityActions, testActions } from "./Store/store";
 import { onStartActiuons } from './Store/store';
-import { favoritesListActions } from '.././Components/Store/store';
+import { favoritesListActions, favoritesDataActions } from '.././Components/Store/store';
 import { fetchCity, fetchCityData, extractHours, finalCityData } from './currentCity'
 
 
@@ -19,7 +19,6 @@ export const Content = () => {
         localStorage.setItem('isFirstTime', 0);
         const inputRef = useRef();
         const [listData, setListData] = useState([]);
-        const [inputText, setInputText] = useState('');
 
         const dispatch = useDispatch();
 
@@ -29,13 +28,16 @@ export const Content = () => {
         
         const extractData = await extractHours(allData)
         const finalData = finalCityData(extractData, cityName);
+        const id = Math.random();
+        finalData.id = id;
         setListData([...listData, finalData])
-        dispatch(currentCityActions.setCurrentCity(finalData))
-    }
+        return finalData
+        }
 
-    const currentCity = useSelector(state => state.currentCity) 
+    const currentCity = useSelector(state => state.currentCity); 
     const firstTime = useSelector(state => state.isFirstTime);
     const favorites = useSelector(state => state.favoritesList.cities);
+    const data = useSelector((state) => state.cityData);
     
     const fetchCityHandler = (e) => {
         if (e.keyCode === 13) {
@@ -43,23 +45,21 @@ export const Content = () => {
                 console.log('Please enter a valid name');
             }
             else {
-                fetchDays(inputRef.current.value)
+                 const lowerCaseName = inputRef.current.value.toLowerCase();
+                 fetchDays(lowerCaseName)
+                .then(data => dispatch(currentCityActions.setCurrentCity(data)))
             }
         }
     }
 
 
     const favoriteHandler = (city) => {
-        console.log('currentCity ', currentCity);
-        const favoritesLowerCase = favorites.map(city => {
-            return city.toLowerCase()})
-        const isCity = favoritesLowerCase.includes(city.toLowerCase())
+        const isCity = favorites.includes(city.toLowerCase())
         if (!isCity) {
             dispatch(favoritesListActions.addToFavorite(city))
+            fetchDays(currentCity.name)
+            .then(data => dispatch(favoritesDataActions.addToFavoritesData(data))) 
         }
-        if (isCity) {
-            dispatch(favoritesListActions.removeFromFavorites(city))
-            }
     }
 
 
@@ -67,20 +67,13 @@ export const Content = () => {
     // Load Tel Aviv only first time
        if (firstTime === false) {
             fetchDays('tel-aviv')
+            .then(data => dispatch(currentCityActions.setCurrentCity(data)))
             dispatch(onStartActiuons.setIsFirstTime());
        }
-
-      
     }, [])
-
-    useEffect(() => {
-        console.log('FAV ', favorites);
-    }, [favorites])
 
     return(
         <div className={[style['content']]}>
-            {/* <CurrentCity /> */}
-            {/* Search field - city name */}
             <div className={style['favorites-container']}>
                 <input 
                     className={style['input-city']} 
