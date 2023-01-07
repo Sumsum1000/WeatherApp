@@ -1,35 +1,37 @@
-.bar{
-    background-color: salmon;
-    border-bottom: 1px solid black;
-    height: 10%;
-    padding: 0 100px 0 100px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.bar {
+  background-color: salmon;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-bottom: 1px solid black;
+  //height: 10%;
+  padding: 20px 100px 20px 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
+  .title {
+    font-size: 40px;
+    font-weight: 500;
+    color: white;
+    margin: 0;
+  }
 
-    .title{
-        font-size: 40px;
-        font-weight: 500;
-        color: white;
-        margin: 0;
+  .button {
+    margin-left: 20px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 22px;
+    font-weight: 600;
+
+    &:hover {
+      color: black;
     }
-
-    .button{
-        margin-left: 20px;
-        background-color: transparent;
-        border: none;
-        color: white;
-        font-size: 22px;
-        font-weight: 600;
-
-        &:hover{
-            color: black;
-        }
-    }
+  }
 }
 
-img{
-    height: 100%;
-    width: 100%;
+img {
+  height: 100%;
+  width: 100%;
 }

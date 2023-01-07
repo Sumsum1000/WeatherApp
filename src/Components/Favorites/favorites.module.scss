@@ -1,67 +1,100 @@
-.favorites{
-    background-color: rgb(206, 225, 237);
-    height: 75%;
-    padding: 0 100px 30px 100px;
+.favorites {
+  position: relative;
+  background-color: rgb(206, 225, 237);
+  height: auto;
+  padding: 0 100px 30px 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  //justify-content: space-between;
+
+  .favorite-city {
     display: flex;
-    flex-direction: column;
     align-items: flex-end;
-    //justify-content: space-between;
-    
+    justify-content: flex-end;
+    gap: 50px;
+    //background-color: rgb(213, 197, 227);
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
+    width: 100%;
+    height: 220px;
 
-    .favorite-city{
-        display: flex;
-        align-items: flex-end;
-        //background-color: rgb(213, 197, 227);
-        width: 100%;
-        height: 220px;
+    .city-name {
+      margin-right: auto;
+      display: flex;
+      align-items: flex-end;
 
-        .name{
-            font-size: 28px;
-            font-weight: 600;
-            //position: relative;
-            top: 4px;
-            margin-right: auto;
+      h3 {
+        line-height: 30px;
+        font-size: 30px;
+        margin: 0;
+        padding: 0;
+        bottom: 0px;
+        //vertical-align: bottom;
+        //border: 1px solid black;
+      }
+
+      button {
+        margin-right: 20px;
+        width: 20px;
+        height: 20px;
+        background-color: transparent;
+        border: 1px solid rgb(96, 96, 96);
+        border-radius: 3px;
+
+        &:hover {
+          transition: 0.2s ease-in-out;
+          transform: scale(1.2);
+          background-color: rgba(250, 128, 114, 0.8);
         }
-
-        img{
-            width: 220px;
-            height: 220px;
-            position: relative;
-            top: 20px;
-        }
-
-        .next-day{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            //background-color: antiquewhite;
-
-            .temp-date{
-                display: flex;
-                flex-direction: column;
-                font-size: 14px;
-                font-weight: 600;
-                position: relative;
-                //bottom: 30px;
-
-                p:first-child{
-                    color: rgb(87, 87, 87);
-                }
-
-                p:last-child{
-                    color: rgb(0, 0, 0);
-                    font-size: 16px;
-                    font-weight: 700;
-                }
-            }
-    
-            img{
-                width: 220px;
-                height: 220px;
-            }
-        }
-
-       
+      }
     }
+
+    .name {
+      font-size: 28px;
+      font-weight: 600;
+      //position: relative;
+      top: 4px;
+      margin-right: auto;
+    }
+
+    img {
+      width: 220px;
+      height: 220px;
+      position: relative;
+      top: 20px;
+    }
+
+    .next-day {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      //background-color: antiquewhite;
+
+      .temp-date {
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+        font-weight: 600;
+        position: relative;
+        //bottom: 30px;
+
+        p:first-child {
+          color: rgb(87, 87, 87);
+        }
+
+        p:last-child {
+          color: rgb(0, 0, 0);
+          font-size: 16px;
+          font-weight: 700;
+        }
+      }
+
+      img {
+        width: 220px;
+        height: 220px;
+      }
+    }
+  }
 }
