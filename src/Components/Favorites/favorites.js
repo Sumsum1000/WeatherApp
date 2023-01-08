@@ -16,7 +16,9 @@ export const Favorites = ({ className }) => {
   return (
     <div className={[style["favorites"]]}>
       {favorites.length === 0 ? (
-        <p>no favorites added</p>
+        <p className={[style["empty-favorites"]]}>
+          Let's add some fovorites cities...
+        </p>
       ) : (
         favorites.map((city) => {
           return (
@@ -28,6 +30,10 @@ export const Favorites = ({ className }) => {
               temp2={city.days[1].temp}
               temp3={city.days[2].temp}
               temp4={city.days[3].temp}
+              date1={city.days[0].date}
+              date2={city.days[1].date}
+              date3={city.days[2].date}
+              date4={city.days[3].date}
               src1={`http://openweathermap.org/img/wn/${city.days[0].icon}@4x.png`}
               src2={`http://openweathermap.org/img/wn/${city.days[1].icon}@4x.png`}
               src3={`http://openweathermap.org/img/wn/${city.days[2].icon}@4x.png`}

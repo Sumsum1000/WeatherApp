@@ -28,31 +28,31 @@ export const finalCityData = (data, cityName) => {
     name: cityName,
     days: [
       {
-        temp: data[0].main.temp,
+        temp: parseInt(data[0].main.temp - 273.15),
         icon: data[0].weather[0].icon,
         date: data[0].dt_txt.split("").splice(0, 10).join(""),
         description: data[0].weather[0].description,
       },
       {
-        temp: data[1].main.temp,
+        temp: parseInt(data[1].main.temp - 273.15),
         icon: data[1].weather[0].icon,
         date: data[1].dt_txt.split("").splice(0, 10).join(""),
         description: data[1].weather[0].description,
       },
       {
-        temp: data[2].main.temp,
+        temp: parseInt(data[2].main.temp - 273.15),
         icon: data[2].weather[0].icon,
         date: data[2].dt_txt.split("").splice(0, 10).join(""),
         description: data[2].weather[0].description,
       },
       {
-        temp: data[3].main.temp,
+        temp: parseInt(data[3].main.temp - 273.15),
         icon: data[3].weather[0].icon,
         date: data[3].dt_txt.split("").splice(0, 10).join(""),
         description: data[3].weather[0].description,
       },
       {
-        temp: data[4].main.temp,
+        temp: parseInt(data[4].main.temp - 273.15),
         icon: data[4].weather[0].icon,
         date: data[4].dt_txt.split("").splice(0, 10).join(""),
         description: data[4].weather[0].description,

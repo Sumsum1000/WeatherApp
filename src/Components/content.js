@@ -16,25 +16,52 @@ import {
   extractHours,
   finalCityData,
 } from "./currentCity";
+//import { Modal } from "./Modal/modal";
+import Modal from "react-modal";
 
 export const Content = () => {
   localStorage.setItem("isFirstTime", 0);
   const inputRef = useRef();
   const [listData, setListData] = useState([]);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   const dispatch = useDispatch();
 
-  const fetchDays = async (cityName) => {
-    const cityData = await fetchCity(cityName);
-    const allData = await fetchCityData(cityData);
+  const customStyles = {
+    content: {
+      width: "35vw",
+      height: "35vh",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
 
-    const extractData = await extractHours(allData);
-    const finalData = finalCityData(extractData, cityName);
-    const id = Math.random();
-    finalData.id = id;
-    finalData.heartColor = "red";
-    setListData([...listData, finalData]);
-    return finalData;
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const fetchDays = async (cityName) => {
+    try {
+      const cityData = await fetchCity(cityName);
+      const allData = await fetchCityData(cityData);
+
+      const extractData = await extractHours(allData);
+      const finalData = finalCityData(extractData, cityName);
+      const id = Math.random();
+      finalData.id = id;
+      finalData.heartColor = "red";
+      setListData([...listData, finalData]);
+      return finalData;
+    } catch (error) {
+      console.log("error: ", error);
+      Modal.setAppElement("body");
+      openModal();
+    }
   };
 
   const currentCity = useSelector((state) => state.currentCity);
@@ -48,12 +75,18 @@ export const Content = () => {
         inputRef.current.value === "" ||
         inputRef.current.value === undefined
       ) {
+        Modal.setAppElement("body");
+        openModal();
         console.log("Please enter a valid name");
       } else {
-        const lowerCaseName = inputRef.current.value.toLowerCase();
-        fetchDays(lowerCaseName).then((data) =>
-          dispatch(currentCityActions.setCurrentCity(data))
-        );
+        try {
+          const lowerCaseName = inputRef.current.value.toLowerCase();
+          fetchDays(lowerCaseName).then((data) =>
+            dispatch(currentCityActions.setCurrentCity(data))
+          );
+        } catch (error) {
+          console.log("erro: ", error);
+        }
       }
     }
   };
@@ -94,6 +127,16 @@ export const Content = () => {
 
   return (
     <div className={[style["content"]]}>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        className={style["Modal"]}
+        overlayClassName={style["Overlay"]}
+        style={customStyles}
+      >
+        <button onClick={closeModal}>x</button>
+        <div className={[style["modal-text"]]}>Please enter a valid city.</div>
+      </Modal>
       <div className={style["favorites-container"]}>
         <input
           className={style["input-city"]}
@@ -115,6 +158,7 @@ export const Content = () => {
           />
         </svg>
       </div>
+
       <div className={style["grid-current"]}>
         <img
           src={`http://openweathermap.org/img/wn/${currentCity.days[0].icon}@4x.png`}
@@ -122,7 +166,11 @@ export const Content = () => {
         />
         <div className={style["deg-container"]}>
           <h3 className={style["namecurrent"]}>{currentCity.name}</h3>
-          <p className={style["deg-current"]}>{currentCity.days[0].temp}</p>
+          <div>
+            <p>{currentCity.days[0].temp}</p>
+            <p>C</p>
+            <p className={style["deg-o"]}>o</p>
+          </div>
         </div>
         <p className={[style["descreption"]]}>
           {currentCity.days[0].description}
