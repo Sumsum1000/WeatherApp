@@ -1,12 +1,10 @@
 import style from "./content.module.scss";
-import placeholder from "../placeholder.jpg";
-import favorite from "../Favorite_icon.png";
 
 import { IconCard } from "./IconCard";
 //-----------------------------------------------
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { currentCityActions, testActions } from "./Store/store";
+import { currentCityActions } from "./Store/store";
 import { onStartActiuons } from "./Store/store";
 import {
   favoritesListActions,
@@ -43,7 +41,6 @@ export const Content = () => {
   const firstTime = useSelector((state) => state.isFirstTime);
   const favorites = useSelector((state) => state.favoritesList.cities);
   const data = useSelector((state) => state.cityData);
-  //const heartColor = useSelector(state => state.heartColor)
 
   const fetchCityHandler = (e) => {
     if (e.keyCode === 13) {
@@ -118,8 +115,6 @@ export const Content = () => {
           />
         </svg>
       </div>
-      {/* <h1>{list}</h1> */}
-      {/* Current weather */}
       <div className={style["grid-current"]}>
         <img
           src={`http://openweathermap.org/img/wn/${currentCity.days[0].icon}@4x.png`}
@@ -134,26 +129,15 @@ export const Content = () => {
         </p>
       </div>
       <div className={style["five-days-container"]}>
-        <IconCard
-          src={`http://openweathermap.org/img/wn/${currentCity.days[1].icon}@4x.png`}
-          date={currentCity.days[1].date}
-          temp={currentCity.days[1].temp}
-        />
-        <IconCard
-          src={`http://openweathermap.org/img/wn/${currentCity.days[2].icon}@4x.png`}
-          date={currentCity.days[2].date}
-          temp={currentCity.days[2].temp}
-        />
-        <IconCard
-          src={`http://openweathermap.org/img/wn/${currentCity.days[3].icon}@4x.png`}
-          date={currentCity.days[3].date}
-          temp={currentCity.days[3].temp}
-        />
-        <IconCard
-          src={`http://openweathermap.org/img/wn/${currentCity.days[4].icon}@4x.png`}
-          date={currentCity.days[4].date}
-          temp={currentCity.days[4].temp}
-        />
+        {currentCity.days.map((city) => {
+          return (
+            <IconCard
+              src={`http://openweathermap.org/img/wn/${city.icon}@4x.png`}
+              date={city.date}
+              temp={city.temp}
+            />
+          );
+        })}
       </div>
     </div>
   );
