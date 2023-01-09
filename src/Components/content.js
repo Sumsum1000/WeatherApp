@@ -22,10 +22,15 @@ import Modal from "react-modal";
 export const Content = () => {
   localStorage.setItem("isFirstTime", 0);
   const inputRef = useRef();
+  const dispatch = useDispatch();
+
   const [listData, setListData] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
 
-  const dispatch = useDispatch();
+  const currentCity = useSelector((state) => state.currentCity);
+  const firstTime = useSelector((state) => state.isFirstTime);
+  const favorites = useSelector((state) => state.favoritesList.cities);
+  const data = useSelector((state) => state.cityData);
 
   const customStyles = {
     content: {
@@ -63,11 +68,6 @@ export const Content = () => {
       openModal();
     }
   };
-
-  const currentCity = useSelector((state) => state.currentCity);
-  const firstTime = useSelector((state) => state.isFirstTime);
-  const favorites = useSelector((state) => state.favoritesList.cities);
-  const data = useSelector((state) => state.cityData);
 
   const fetchCityHandler = (e) => {
     if (e.keyCode === 13) {
@@ -109,7 +109,6 @@ export const Content = () => {
       );
       dispatch(onStartActiuons.setIsFirstTime());
     }
-
     const isInFaforites = favorites.includes(currentCity.name);
     dispatch(currentCityActions.toggleHeartColor(isInFaforites));
   }, []);
@@ -120,7 +119,6 @@ export const Content = () => {
   }, [favorites]);
 
   useEffect(() => {
-    console.log("CurrentCity ", currentCity);
     const isInFaforites = favorites.includes(currentCity.name);
     dispatch(currentCityActions.toggleHeartColor(isInFaforites));
   }, [currentCity]);

@@ -13,7 +13,7 @@ const onStartSlice = createSlice({
 const currentCitySlice = createSlice({
   name: "currentCity",
   initialState: {
-    name: "My",
+    name: "",
     heartColor: "red",
     days: [
       { dt_txt: "", weather: [{ icon: "" }], temp: "" },
