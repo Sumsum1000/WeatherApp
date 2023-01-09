@@ -1,8 +1,6 @@
-import { PASSWORD } from "../password";
-
 export const fetchCity = async (cityName) => {
   const days = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=
-        ${cityName},&appid=${PASSWORD}`);
+        ${cityName},&appid=${process.env.REACT_APP_PASSWORD}`);
   const daysData = await days.json();
   return daysData;
 };
@@ -11,7 +9,7 @@ export const fetchCityData = async (data) => {
   const newLat = await data[0].lat;
   const newLon = await data[0].lon;
   const cityDataUrl = `
-        https://api.openweathermap.org/data/2.5/forecast?lat=${newLat}&lon=${newLon}&appid=${PASSWORD}`;
+        https://api.openweathermap.org/data/2.5/forecast?lat=${newLat}&lon=${newLon}&appid=${process.env.REACT_APP_PASSWORD}`;
 
   const result = await fetch(cityDataUrl);
   const result2 = await result.json();
