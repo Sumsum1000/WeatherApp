@@ -1,6 +1,6 @@
 export const fetchCity = async (cityName) => {
   const days = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=
-        ${cityName},&appid=${process.env.REACT_APP_PASSWORD}`);
+        ${cityName},&appid=ab96154ce8f20e07812ea1417c9a0c0c`);
   const daysData = await days.json();
   return daysData;
 };
@@ -9,7 +9,7 @@ export const fetchCityData = async (data) => {
   const newLat = await data[0].lat;
   const newLon = await data[0].lon;
   const cityDataUrl = `
-        https://api.openweathermap.org/data/2.5/forecast?lat=${newLat}&lon=${newLon}&appid=${process.env.REACT_APP_PASSWORD}`;
+        https://api.openweathermap.org/data/2.5/forecast?lat=${newLat}&lon=${newLon}&appid=ab96154ce8f20e07812ea1417c9a0c0c`;
 
   const result = await fetch(cityDataUrl);
   const result2 = await result.json();
